@@ -24,18 +24,18 @@ class NewVisitorTest(unittest.TestCase):
         # is tying fly-fishing lures)
 
         # When she hits enter, the page updates, and now the page lists
-        # "1: Buy peacock feathers" as an item in a to-do list
+        # "1: Buy peacock feathers" as an item in a to-do lists
 
         # There is still a text box inviting her to add another item. She
         # enters "Use peacock feathers to make a fly" (Edith is very methodical)
 
-        # The page updates again, and now shows both items on her list
+        # The page updates again, and now shows both items on her lists
 
-        # Edith wonders whether the site will remember her list. Then she sees
+        # Edith wonders whether the site will remember her lists. Then she sees
         # that the site has generated a unique URL for her -- there is some
         # explanatory text to that effect.
 
-        # She visits that URL - her to-do list is still there.
+        # She visits that URL - her to-do lists is still there.
 
         # Satisfied, she goes back to sleep
 
