@@ -5,7 +5,7 @@ from lists.models import Item, List
 
 
 def home_page(request):
-   return render(request, 'home.html')
+    return render(request, 'home.html')
 
 
 def new_list(request):
