@@ -1,6 +1,7 @@
 from selenium.webdriver.common.keys import Keys
 
 from functional_tests.base import FunctionalTest
+from lists.forms import DUPLICATE_ITEM_ERROR
 
 MAX_WAIT = 10
 
@@ -51,7 +52,8 @@ class ItemValidationTest(FunctionalTest):
 
         # She sees a helpful error message
         self.wait_for(lambda: self.assertEqual(
-            "You've already got this in your lists"
+            "You've already got this in your lists",
+            DUPLICATE_ITEM_ERROR
         ))
 
     def test_error_messages_are_cleared_on_input(self):
