@@ -13,6 +13,28 @@
 
 <body>
     <div class="container">
+{#        <nav>#}
+{#            <div class="nav-wrapper">#}
+                <div class="row">
+                    <div class="col s12">
+                        {% if user.is_authenticated %}
+                            <p>Logged in as {{ user.email }}</p>
+                            <p><a id="id_logout" href="{% url 'logout' %}">Log out</a></p>
+                        {% else %}
+                            <form method="post" action="{% url 'send_login_email' %}">
+                                Enter email to login:
+                                <div class="input-field inline">
+                                    <input type="text" name="email"/>
+                                    <label for="email_inline">Email</label>
+                                </div>
+                                {% csrf_token %}
+                            </form>
+                        {% endif %}
+
+                    </div>
+                </div>
+{#            </div>#}
+{#        </nav>#}
         <div class="row">
             <div class="col m6  offset-m3">
                 <div class="blue-text center-align text-darken-2">
