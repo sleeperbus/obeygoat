@@ -1,5 +1,8 @@
+import logging
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
+
+logger = logging.getLogger(__name__)
 
 
 def send_login_email(request):
