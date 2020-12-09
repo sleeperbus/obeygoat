@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -8,3 +10,7 @@ class User(models.Model):
     is_anonymous = False
     is_authenticated = True
 
+
+class Token(models.Model):
+    uid = models.CharField(max_length=40, default=uuid.uuid4)
+    email = models.EmailField()
