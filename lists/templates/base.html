@@ -13,6 +13,25 @@
 
 <body>
     <div class="container">
+{#        <nav>#}
+            <div class="row">
+                <div class="nav-wrapper">
+                    <div class="container-fluid">
+                        <a class="brand-logo" href="/">Superlists</a>
+                        <form class="right" method="POST" action="#">
+                            {% csrf_token %}
+                            <div class="input-field col s12">
+                                <input id="email" name="email" type="email" class="validate" />
+                                <label for="email">Email</label>
+                                <span class="helper-text" data-error="wrong" data-success="right">Your Email</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+{#        </nav>#}
+
         <div class="row">
             <div class="col m6  offset-m3">
                 <div class="blue-text center-align text-darken-2">
