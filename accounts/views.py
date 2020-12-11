@@ -1,4 +1,6 @@
 import logging
+
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 
@@ -13,6 +15,7 @@ def send_login_email(request):
         'noreply@superlists',
         [email]
     )
+    messages.success(request, "Check your email, we've sent you a link you can use to log in.")
     return redirect('/')
 
 

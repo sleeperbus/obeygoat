@@ -18,7 +18,7 @@
                 <div class="nav-wrapper">
                     <div class="container-fluid">
                         <a class="brand-logo" href="/">Superlists</a>
-                        <form class="right" method="POST" action="#">
+                        <form class="right" method="POST" action="{% url 'send_login_email' %}">
                             {% csrf_token %}
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" class="validate" />
