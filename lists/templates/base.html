@@ -13,24 +13,36 @@
 
 <body>
     <div class="container">
-{#        <nav>#}
-            <div class="row">
-                <div class="nav-wrapper">
-                    <div class="container-fluid">
-                        <a class="brand-logo" href="/">Superlists</a>
-                        <form class="right" method="POST" action="{% url 'send_login_email' %}">
-                            {% csrf_token %}
-                            <div class="input-field col s12">
-                                <input id="email" name="email" type="email" class="validate" />
-                                <label for="email">Email</label>
-                                <span class="helper-text" data-error="wrong" data-success="right">Your Email</span>
-                            </div>
-                        </form>
-                    </div>
+        <div class="row">
+            <div class="nav-wrapper">
+                <div class="container-fluid">
+                    <a class="brand-logo" href="/">Superlists</a>
+                    <form class="right" method="POST" action="{% url 'send_login_email' %}">
+                        {% csrf_token %}
+                        <div class="input-field col s12">
+                            <input id="email" name="email" type="email" class="validate" />
+                            <label for="email">Email</label>
+                            <span class="helper-text" data-error="wrong" data-success="right">Your Email</span>
+                        </div>
+                    </form>
                 </div>
-
             </div>
-{#        </nav>#}
+        </div>
+
+        {% if messages %}
+            <div class="row">
+                <div class="col s8">
+                    {% for message in messages %}
+                        {% if message.level_tag == 'success' %}
+                            <div class="text-accent-1">{{ message }}</div>
+                        {% else %}
+                            <div class="text-accent-2">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        {% endif %}
 
         <div class="row">
             <div class="col m6  offset-m3">
