@@ -26,3 +26,14 @@ class AuthenticateTest(TestCase):
         existing_user = User.objects.create(email=email)
         user = PssswordlessAuthenticationBackend().authenticate(uid=token.uid)
         self.assertEqual(existing_user, user)
+
+
+class GetUserTest(TestCase):
+    def test_gets_user_by_email(self):
+        User.objects.create(email='extra@b.com')
+        desired_user = User.objects.create(email='a@b.com')
+        found_user = PssswordlessAuthenticationBackend().get_user(email='a@b.com')
+        self.assertEqual(desired_user, found_user)
+
+    def test_return_None_if_no_user_with_that_email(self):
+        self.assertIsNone(PssswordlessAuthenticationBackend().get_user('a@b.com'))
