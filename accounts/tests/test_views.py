@@ -56,3 +56,12 @@ class LoginViewTest(TestCase):
             call(uid='abcd1234')
         )
 
+    @patch('accounts.views.auth')
+    def test_calls_auth_login_with_user_if_there_is_one(self, mock_auth):
+        response = self.client.get('/accounts/login?uid=abcd1234')
+        self.assertEqual(
+            mock_auth.login.call_args,
+            call(response.wsgi_request, mock_auth.authenticate.return_value)
+        )
+
+
