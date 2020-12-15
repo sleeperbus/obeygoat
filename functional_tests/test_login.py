@@ -1,4 +1,5 @@
 import re
+from time import sleep
 
 from django.core import mail
 from selenium.webdriver.common.keys import Keys
@@ -43,5 +44,5 @@ class LoginTest(FunctionalTest):
         # she is logged in!
         self.wait_for(lambda: self.browser.find_element_by_link_text('Log out'))
 
-        navbar = self.browser.find_element_by_css_selector('.navbar')
+        navbar = self.browser.find_element_by_css_selector('.nav-wrapper')
         self.assertIn(TEST_EMAIL, navbar.text)
