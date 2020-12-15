@@ -19,7 +19,7 @@
                     {% if user.email %}
                         <ul class="right">
                             <li>Logged in as {{ user.email }}</li>
-                            <li><a href="#">Log out</a></li>
+                            <li><a href="{% url 'logout' %}">Log out</a></li>
                         </ul>
                     {% else %}
                         <form class="right" method="POST" action="{% url 'send_login_email' %}">
