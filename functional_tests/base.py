@@ -5,6 +5,7 @@ from unittest import skip
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+from functional_tests.server_tools import reset_database
 
 MAX_WAIT = 10
 
@@ -27,6 +28,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.staging_server = os.environ.get('STAGING_SERVER')
         if self.staging_server:
             self.live_server_url = 'http://' + self.staging_server
+            reset_database(self.staging_server)
 
     def tearDown(self) -> None:
         self.browser.quit()
