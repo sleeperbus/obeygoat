@@ -12,22 +12,24 @@
 </head>
 
 <body>
-    <div class="container">
-        <nav>
-            <div class="nav-wrapper"> <div class="container-fluid">
-                    <a class="brand-logo" href="/">Superlists</a>
-                    {% if user.email %}
-                        <ul class="right">
-                            <li>Logged in as {{ user.email }}</li>
-                            <li><a href="{% url 'logout' %}">Log out</a></li>
-                        </ul>
-                    {% else %}
-                        <form class="right" method="POST" action="{% url 'send_login_email' %}">
-                            {% csrf_token %}
-                            <div class="input-field col s12">
-                                <label for="email">Email</label>
-                                <input id="email" name="email" type="search" class="validate" />
-                            </div>
+<div class="container">
+    <nav>
+        <div class="nav-wrapper">
+            <div class="container-fluid">
+                <a class="brand-logo" href="/">Superlists</a>
+                {% if user.email %}
+                    <ul class="right">
+                        <li><a href="{% url 'my_lists' user.email %}">My lists</a></li>
+                        <li>Logged in as {{ user.email }}</li>
+                        <li><a href="{% url 'logout' %}">Log out</a></li>
+                    </ul>
+                {% else %}
+                    <form class="right" method="POST" action="{% url 'send_login_email' %}">
+                        {% csrf_token %}
+                        <div class="input-field col s12">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="search" class="validate"/>
+                        </div>
                         </form>
                     {% endif %}
                 </div>
