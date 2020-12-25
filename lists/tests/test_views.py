@@ -141,11 +141,10 @@ class NewListIntegratedTest(TestCase):
         self.assertEqual(List.objects.count(), 0)
         self.assertEqual(Item.objects.count(), 0)
 
-    @skip
     def test_list_owner_is_saved_if_user_is_authenticated(self):
         user = User.objects.create(email='a@b.com')
         self.client.force_login(user)
-        self.client.post('/list/new', data={'text': 'new item'})
+        self.client.post('/lists/new', data={'text': 'new item'})
         list_ = List.objects.first()
         self.assertEqual(list_.owner, user)
 
@@ -201,3 +200,11 @@ class NewListViewUnitTest(unittest.TestCase):
         mock_form.is_valid.return_value = False
         new_list2(self.request)
         self.assertFalse(mock_form.save.called)
+
+    @patch('lists.views.redirect')
+    def test_redirects_to_form_returned_object_if_form_valid(self, mock_redirect, mockNewListForm):
+        mock_form = mockNewListForm.return_value
+        mock_form.is_valid.return_value = True
+        response = new_list2(self.request)
+        self.assertEqual(response, mock_redirect.return_value)
+        mock_redirect.assert_called_once_with(mock_form.save.return_value)
