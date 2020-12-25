@@ -82,3 +82,9 @@ class ListModelTest(TestCase):
         returned = List.create_new(first_item_text='new item text')
         new_list = List.objects.first()
         self.assertEqual(returned, new_list)
+
+    def test_list_name_is_first_item_text(self):
+        list_ = List.objects.create()
+        Item.objects.create(text='first item', list=list_)
+        Item.objects.create(text='second item', list=list_)
+        self.assertEqual(list_.name, 'first item')
