@@ -50,7 +50,7 @@ class LoginViewTest(TestCase):
         self.assertRedirects(response, '/')
 
     def test_calls_authenticate_with_uid_from_get_request(self, mock_auth):
-        self.client.get('/accounts/login?uid=abcd1234')
+        self.client.get('/accounts/login?token=abcd1234')
         self.assertEqual(
             mock_auth.authenticate.call_args,
             call(uid='abcd1234')
