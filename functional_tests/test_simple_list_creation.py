@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
 from functional_tests.base import FunctionalTest
@@ -61,7 +62,7 @@ class NewVisitorTest(FunctionalTest):
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
-        
+
         # She notices that her list has a unique URL
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
@@ -70,7 +71,13 @@ class NewVisitorTest(FunctionalTest):
         ## We use a new browser session to make sure that no information
         ## of Edith's is coming through from cookies etc
         self.browser.quit()
-        self.browser = webdriver.Chrome()
+
+        chrome_options = Options()
+        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        self.browser = webdriver.Chrome(chrome_options=chrome_options)
+        # self.browser = webdriver.Chrome()
 
         # Francis visits the home page. There is no sign of Edith's
         # list
