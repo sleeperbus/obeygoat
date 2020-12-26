@@ -5,6 +5,7 @@ from unittest import skip
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
 from functional_tests.server_tools import reset_database
@@ -27,7 +28,11 @@ def wait(fn):
 
 class FunctionalTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
-        self.browser = webdriver.Chrome()
+        chrome_options = Options()
+        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        self.browser = webdriver.Chrome(chrome_options=chrome_options)
         self.staging_server = os.environ.get('STAGING_SERVER')
         if self.staging_server:
             self.live_server_url = 'http://' + self.staging_server
