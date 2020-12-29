@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
 from functional_tests.base import FunctionalTest
+from functional_tests.list_page import ListPage
 
 MAX_WAIT = 10
 
@@ -20,7 +21,8 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('To-Do', header_text)
 
         # She is invited to enter a to-do item straight away
-        inputbox = self.get_item_input_box()
+        list_page = ListPage(self)
+        inputbox = list_page.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Enter a to-do item'
@@ -34,17 +36,17 @@ class NewVisitorTest(FunctionalTest):
         # "1: Buy peacock feathers" as an item in a to-do lists
         inputbox.send_keys(Keys.ENTER)
 
-        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        list_page.wait_for_row_in_list_table('Buy peacock feathers', 1)
 
         # There is still a text box inviting her to add another item. She
         # enters "Use peacock feathers to make a fly" (Edith is very methodical)
-        inputbox = self.get_item_input_box()
+        inputbox = list_page.get_item_input_box()
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items on her lists
-        self.wait_for_row_in_list_table('1: Buy peacock feathers');
-        self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        list_page.wait_for_row_in_list_table('Buy peacock feathers', 1);
+        list_page.wait_for_row_in_list_table('Use peacock feathers to make a fly', 2)
 
         # Edith wonders whether the site will remember her lists. Then she sees
         # that the site has generated a unique URL for her -- there is some
@@ -58,10 +60,11 @@ class NewVisitorTest(FunctionalTest):
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # Edith starts a new to-do list
         self.browser.get(self.live_server_url)
-        inputbox = self.get_item_input_box()
+        list_page = ListPage(self)
+        inputbox = list_page.get_item_input_box()
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        list_page.wait_for_row_in_list_table('Buy peacock feathers', 1)
 
         # She notices that her list has a unique URL
         edith_list_url = self.browser.current_url
@@ -73,11 +76,9 @@ class NewVisitorTest(FunctionalTest):
         self.browser.quit()
 
         chrome_options = Options()
-        # chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
         self.browser = webdriver.Chrome(chrome_options=chrome_options)
-        # self.browser = webdriver.Chrome()
 
         # Francis visits the home page. There is no sign of Edith's
         # list
@@ -88,10 +89,10 @@ class NewVisitorTest(FunctionalTest):
 
         # Francis starts a new list by entering a new item. He
         # is less interesting than Edith...
-        inputbox = self.get_item_input_box()
+        inputbox = list_page.get_item_input_box()
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buy milk')
+        list_page.wait_for_row_in_list_table('Buy milk', 1)
 
         # Francis gets his own unique URL
         fransis_list_url = self.browser.current_url
