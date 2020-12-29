@@ -37,3 +37,6 @@ class ListPage(object):
         self.test.wait_for(
             lambda: self.test.assertIn(email, [item.text for item in self.get_shared_with_list()])
         )
+
+    def get_list_owner(self):
+        return self.test.browser.find_element_by_link_text('id_list_owner').text

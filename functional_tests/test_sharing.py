@@ -1,8 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from .base import FunctionalTest
-from .list_page import ListPage
+from functional_tests.base import FunctionalTest
+from functional_tests.list_page import ListPage
+from functional_tests.my_lists_page import MyListPage
 
 
 def quit_if_possible(browser):
@@ -39,3 +40,13 @@ class SharingTest(FunctionalTest):
         # She shares her list.
         # The page updates to say that it's shared with Oniciferous:
         list_page.share_list_with('oniciferous@example.com')
+
+        # Oniciferous now goes to the lists page with his browser
+        self.browser = oni_browser
+        MyListPage(self).go_to_my_list_page()
+
+        # He see Edith's list in there!
+        self.browser.find_element_by_link_text('Get help').click()
+
+        # On the list page, Oniciferous can see says that it's Edith's list
+        self.wait_for(lambda: self.assertEqual(list_page.get_list_owner(), 'edith@example.com'))
