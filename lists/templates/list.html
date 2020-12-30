@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
 
 {% block header_text %}
-Your To-Do list
+    Your To-Do list
+{% endblock %}
+
+{% block list_share %}
+    <div class="col m6">
+        <label for="shared">List shared with:</label>
+        <ul class="list-sharee">
+            {% for sharee in list.shared_with.all %}
+                <li>{{ sharee.email }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+    <div class="col m6">
+        <form method="POST" action="{% url 'share_list' list.id %}">
+            {% csrf_token %}
+            <div class="input-field col s12">
+                <label for="email">Share list</label>
+                <input id="email" name="sharee" placeholder="your-friend@example.com" type="search" class="validate"/>
+            </div>
+        </form>
+    </div>
 {% endblock %}
 
 {% block form_action %}{% url 'view_list' list.id %}{% endblock %}
@@ -9,7 +30,12 @@ Your To-Do list
 {% block table %}
     <table id="id_list_table" class="table highlight">
         {% for item in list.item_set.all %}
-            <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+            <tr>
+                <td>{{ forloop.counter }}: {{ item.text }}</td>
+            </tr>
         {% endfor %}
     </table>
+    {% if list.owner %}
+        <p>List owner: <span id="id_list_owner">{{ list.owner.email }}</span></p>
+    {% endif %}
 {% endblock %}

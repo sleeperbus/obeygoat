@@ -5,6 +5,7 @@ from django.urls import reverse
 
 class List(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    shared_with = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_to')
 
     def get_absolute_url(self):
         return reverse('view_list', args=[self.id])
